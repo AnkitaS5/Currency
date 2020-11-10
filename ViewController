@@ -19,7 +19,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     @IBOutlet weak var objectName: UILabel!
     @IBOutlet weak var accuracyLabel: UILabel!
     
-    var model = Resnet50().model
+    var model = CurrencyImageClassifier3().model
+    let speechSynthesizer = AVSpeechSynthesizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,5 +76,15 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:]).perform([request])
     }
     
+    @IBAction func voiceButton(_ sender: Any) {
+        let utterance = AVSpeechUtterance(string: objectName.text ?? "One Dollar")
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        //utterance.rate = 0.1
+        
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
+    }
+    
 }
+
 
